@@ -5,10 +5,10 @@ plugins {
 }
 
 ext {
-    repoPath = "gradle-guides/building-cpp-executables"
+    repoPath = "gradle-guides/building-c-executables"
 }
 
 apply from : 'gradle/build-documentation.gradle'
 apply from : 'gradle/publish-documentation.gradle'
 //apply from : 'gradle/test-source.gradle'
-apply from : 'gradle/cpp.gradle'
+apply from : 'gradle/c.gradle'

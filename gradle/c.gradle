@@ -1,4 +1,4 @@
-apply plugin : 'cpp' // <1>
+apply plugin : 'c' // <1>
 
 model { // <2>
     components {
