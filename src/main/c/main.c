@@ -2,6 +2,6 @@
 #include "greeting.h" // <2>
 
 int main(int argc, char** argv, char** env) {
-    printf( "%s\n", greeting);
+    printf( "%s\n", GREETING_STRING);
     return 0;
 }
