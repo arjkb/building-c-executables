@@ -1,28 +1,22 @@
 language: java
-
 matrix:
   include:
-    - os:  linux
-      jdk: oraclejdk7
-    - os: osx
-      osx_image: xcode8.3
-
+  - os: linux
+    jdk: oraclejdk7
+  - os: osx
+    osx_image: xcode8.3
 script: ./gradlew build publishGhPages --stacktrace
-
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
 - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 - rm -fr $HOME/.gradle/caches/*/scripts/
-
 cache:
   directories:
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
-
 env:
   global:
-    secure: md4b/dKr0zCcEMK1RQThiRZNzCjGOz6bdcv4K8gweMmOK4GKsg5fguUkMelMEpj7YsnWUUu37ps3S1BERwW0oAiJoKA8ujdUrng7U1Nx8fAaG248nxLtayAWdxXY7G6RL3tqdFwIMvkntwsoD8zH1MpUrsbZybSQoPNgCgwsMg32rDSd8rDAK1u5OtLxHUt+WR/MD6BBo/XldON29MPmIXU/w6mm5PFcGNFWq7atQMagsnBAak2W2u5LR+bYhTZxbe8zWSDs/H7jOaTzEjH/WXjWOaVXdm5VgnMda7tVvmL0SRdL+0cwDT1tWZeSHGsQA1P+h6u/Dx3ZQhqZg12pQu/ntCh8PMSwSYtsGwVHzsELjyFFHvq9pEOweBEsS+OmZuJOC2U+d7ZV9A9KjyDrd+tX/We0BSRl50yJLHw5zYZh9qlrMTfK1UA3RGfWt4/rLJwAfqwBwPWjwwgo7ax4W0ZHi4f1qywbySYBHVyCnomHuVVi+7y4wshjfrsvZLrwdwEpO2fZxMwazEQcR6J7DsmuL9YQn/nBWJooPu31SM67dkFLSjIoV0J34rv7aH7ZFZq5/4PB2DQHXTRE4WLAkGXKnc1DYDa/yyIFXSMMEbxOJxae2SPYnM67ncLiPU51RRq+oJ+cv8Ek2yDmzkvpBs/yTlwCqoqTv6E4Em5PzfI=
-
+    secure: mh1kM+rcWUlhT9cDeEa5gz79ZwOYVviA/fabEqhzXZ1GqgTnero1dO7oY3ekZjpOY0hqxrpebuPLpN7V5Uwd76rqBgtRaQ0EDP/l1t7ZAybw8GNJ+tgEvzU+24eFBdouJ0CMad79UUGLJxTwxDOE9JISWFnXQ6E6C2yHrCqaJG+lusKKQt+L5FsjB05t9jiel7ZAJuVnC9QlDs8QIsSR7rHpGxz8UQE0cT6Yuf1lLry5gOTDpnC7wkSVKR80a+NyItgIYKbJdvca6fGkWLwbYpoKr7s8cz+ODTi38YXo9AKHuL9APXSL3Ab59AMfnsVBglhgl6x0JJLdf1OrIxLDiPr5p37SpaiHrhPkoeSXOjv3swThV5BCx22QS0gWtDl9ohsykZqSQ0veq0M1opfX5DX4TZtwQMVk+2tHBndJsCCs1mc9Zb0fpeGP5EYLVJ1PCxlhacCyVa5mwmhfrlTCdxsRtuiUS/awOtz+VeqlF8b5XmtUReshhdvd1w9Nl9uOxcO6g6RJPcTaY51M0415vjHRG+EJlP0gM6k3vwOw9XbQRtqK5DYwFIdFirSeZ+e+jYzbJp3bgX0k295jIZ4tbgMs0WL1UE2XI+KAwR47G24fS4m2SXM1rnSzbTDWY6HZnADGoaYcRRztQLxjQhFKo6roCwYrdc+nwedjTAboiLM=
 notifications:
   slack:
     on_success: always
