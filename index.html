@@ -179,7 +179,7 @@ buildDependentsMainExecutable - Build dependents of executable 'main:executable'
 <pre class="CodeRay highlight"><code data-lang="c"><span class="preprocessor">#include</span> <span class="include">&lt;stdio.h&gt;</span>  <i class="conum" data-value="1"></i><b>(1)</b>
 <span class="preprocessor">#include</span> <span class="include">&quot;greeting.h&quot;</span> <i class="conum" data-value="2"></i><b>(2)</b>
 
-<span class="predefined-type">int</span> main(<span class="predefined-type">int</span> argc, <span class="predefined-type">char</span>** argv, <span class="predefined-type">char</span>** env) {
+<span class="predefined-type">int</span> main(<span class="predefined-type">int</span> argc, <span class="predefined-type">char</span>** argv) {
     printf( <span class="string"><span class="delimiter">&quot;</span><span class="content">%s</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>, GREETING_STRING);
     <span class="keyword">return</span> <span class="integer">0</span>;
 }</code></pre>
@@ -296,7 +296,7 @@ Hello World</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-04 17:07:48 UTC
+Last updated 2017-05-04 19:22:51 UTC
 </div>
 </div>
 </body>
