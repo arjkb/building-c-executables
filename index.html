@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.3">
+<title>Building C Executables</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./coderay-asciidoctor.css">
+<link rel="stylesheet" href="https://guides.gradle.org/asciidoctor.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Source+Code+Pro:500">
+<link rel="apple-touch-icon" sizes="180x180" href="https://guides.gradle.org/icon/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="https://guides.gradle.org/icon/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://guides.gradle.org/icon/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="https://guides.gradle.org/icon/manifest.json">
+<link rel="mask-icon" href="https://guides.gradle.org/icon/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="https://guides.gradle.org/icon/favicon.ico">
+<meta name="apple-mobile-web-app-title" content="Building C++ Executables">
+<meta name="application-name" content="Building C++ Executables">
+<meta name="msapplication-config" content="https://guides.gradle.org/icon/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+<script>
+  (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,"script","https://www.google-analytics.com/analytics.js","ga");
+  ga("create", "UA-4207603-1", "auto");
+  ga("send", "pageview");
+</script>
+</head>
+<body class="article toc2 toc-right">
+<div id="header"><div style="padding-top: 10px;"><a href="https://guides.gradle.org"><img src="http://guides.gradle.org/gradle-guides.svg" alt=""></a></div><h1>Building C Executables</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#what_you_ll_build">What you&#8217;ll build</a></li>
+<li><a href="#what_you_ll_need">What you&#8217;ll need</a></li>
+<li><a href="#layout">Layout</a></li>
+<li><a href="#add_source_code">Add source code</a></li>
+<li><a href="#build_your_project">Build your project</a></li>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#next_steps">Next Steps</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="what_you_ll_build"><a class="anchor" href="#what_you_ll_build"></a>What you&#8217;ll build</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This guide demonstrates how to create a minimalist C executable using Gradle&#8217;s <code>c</code> plugin.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="what_you_ll_need"><a class="anchor" href="#what_you_ll_need"></a>What you&#8217;ll need</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>About NN minutes</p>
+</li>
+<li>
+<p>A text editor</p>
+</li>
+<li>
+<p>A command prompt</p>
+</li>
+<li>
+<p>The Java Development Kit (JDK), version 1.7 or higher</p>
+</li>
+<li>
+<p>A <a href="https://gradle.org/install">Gradle distribution</a>, version 3.5 or better</p>
+</li>
+<li>
+<p>An installed C compiler. See which <a href="https://docs.gradle.org/3.5/userguide/native_software.html#native-binaries:tool-chain-support">C tool chains</a> are supported by Gradle and whether you have to do any <a href="https://docs.gradle.org/3.5/userguide/native_software.html#sec:tool_chain_installation">installation configuration</a> for your platform.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="layout"><a class="anchor" href="#layout"></a>Layout</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The first step is to create a folder for the new project and change folder into it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mkdir c-executable
+$ cd c-executable</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Create a minimalist <code>build.gradle</code> file with the following content:</p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy">apply plugin : <span class="string"><span class="delimiter">'</span><span class="content">c</span><span class="delimiter">'</span></span> <i class="conum" data-value="1"></i><b>(1)</b>
+
+model { <i class="conum" data-value="2"></i><b>(2)</b>
+    components {
+        main(NativeExecutableSpec)  <i class="conum" data-value="3"></i><b>(3)</b> <i class="conum" data-value="4"></i><b>(4)</b>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>C projects are enabled via the <code>c</code> plugin</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>All native build definitions are done within a <code>model</code> block.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>A native executable component is defined by a name - <code>main</code> in this case. This will determine the default location of source code, as well as the final name of the executable.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>An executable is specified by using <a href="https://docs.gradle.org/3.5/dsl/org.gradle.nativeplatform.NativeExecutableSpec.html">NativeExecutableSpec</a>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If you run</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ ./gradlew tasks</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>you will see in the output that Gradle has added a number of tasks</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>installMainExecutable - Installs a development image of executable 'main:executable'
+mainExecutable - Assembles executable 'main:executable'.
+
+Build Dependents tasks
+----------------------
+assembleDependentsMain - Assemble dependents of native executable 'main'.
+assembleDependentsMainExecutable - Assemble dependents of executable 'main:executable'.
+buildDependentsMain - Build dependents of native executable 'main'.
+buildDependentsMainExecutable - Build dependents of executable 'main:executable'.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note the use of <code>Main</code> in the task names which are a direct deriviative of the component being called <code>main</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="add_source_code"><a class="anchor" href="#add_source_code"></a>Add source code</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>By convention, C projects in Gradle will follow a more contemporary layout. This can be troublesome for you if you are used to building C code with build tools that do not use a convention-over-configuration approach. Rest assured that Gradle is very configurable in this regard and should you need to migrate a C project to Gradle you can consult the <a href="https://docs.gradle.org/3.5/userguide/native_software.html#sec:c_sources">C sources</a> section of the User Guide.</p>
+</div>
+<div class="paragraph">
+<p>In the <code>build.gradle</code> you have previsouly defined the executable component to be called <code>main</code>. By convention, this will means that Gradle will look in <code>src/main/c</code> for source files and non-exported header files. Create this folder</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mkdir -p src/main/c</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and place a <code>main.c</code> an a <code>greeting.h</code> within.</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/c/main.c</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="c"><span class="preprocessor">#include</span> <span class="include">&lt;stdio.h&gt;</span>  <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="preprocessor">#include</span> <span class="include">&quot;greeting.h&quot;</span> <i class="conum" data-value="2"></i><b>(2)</b>
+
+<span class="predefined-type">int</span> main(<span class="predefined-type">int</span> argc, <span class="predefined-type">char</span>** argv, <span class="predefined-type">char</span>** env) {
+    printf( <span class="string"><span class="delimiter">&quot;</span><span class="content">%s</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>, GREETING_STRING);
+    <span class="keyword">return</span> <span class="integer">0</span>;
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The standard C headers wil be located via the compiler toolchain that Gradle uses</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Non-exported headers will be searched for relative to the specified C source folders. (In this case <code>src/main/c</code>).</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">src/main/c/greeting.h</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="c"><span class="preprocessor">#ifndef</span> GRADLE_GUIDE_EXAMPLE_GREETING_H__
+<span class="preprocessor">#define</span> GRADLE_GUIDE_EXAMPLE_GREETING_H__
+
+<span class="preprocessor">#define</span> GREETING_STRING <span class="string"><span class="delimiter">&quot;</span><span class="content">Hello, World</span><span class="delimiter">&quot;</span></span>
+
+<span class="preprocessor">#endif</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="build_your_project"><a class="anchor" href="#build_your_project"></a>Build your project</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To build your project you can simply do <code>./gradlew build</code> as per usual, but if you specifically want to build the executable, run the task that Gradle has created for you:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ ./gradlew mainExecutable
+
+:compileMainExecutableMainC <i class="conum" data-value="1"></i><b>(1)</b>
+:linkMainExecutable <i class="conum" data-value="2"></i><b>(2)</b>
+:mainExecutable
+
+BUILD SUCCESSFUL</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>To keep things tidy on the console, Gradle does not display compiler output. If you need to ever diagnose a compilation issue, the output from the compiler is stored in <code>build/tmp/compileMainExecutableMainC/output.txt</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>In a similar fashion the output from the linker is written to <code>build/tmp/linkMainExecutable/output.txt</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Look inside the <code>build</code> folder and you will notice the appearance of a <code>exe</code> folder. By convention Gradle will place all executables in subfolders named according to the component name. In this case you will find your assembled executable in <code>build/exe/main</code> and it will be called <code>main</code> (or <code>main.exe</code> under Windows).</p>
+</div>
+<div class="paragraph">
+<p>Now run your newly built executable.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ ./build/exe/main/main
+
+Hello World</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Congratulations! You have just built a C executable with Gradle.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="summary"><a class="anchor" href="#summary"></a>Summary</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You have created an C project  that can be used as a foundation for something more substantial. In the process you saw:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>How to create a build script for C executables.</p>
+</li>
+<li>
+<p>Where to add source code by convention.</p>
+</li>
+<li>
+<p>How to build the executable without building the full project.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="next_steps"><a class="anchor" href="#next_steps"></a>Next Steps</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Testing using <a href="http://cunit.sourceforge.net">CUnit</a> or <a href="https://github.com/google/googletest">GoogleTest</a> is supported. Gradle will respectively create a matching <a href="https://docs.gradle.org/3.5/dsl/org.gradle.nativeplatform.test.cunit.CUnitTestSuiteSpec.html">CUnitTestSuiteSpec</a> or <a href="https://docs.gradle.org/3.5/dsl/native_software.html#native_binaries:google_test">GoogleTestTestSuiteSpec </a> component for the executable you have defined in this guide. See  the <a href="https://docs.gradle.org/3.5/userguide/native_software.html#native_binaries:cunit">CUnit support</a> and <a href="https://docs.gradle.org/3.5/userguide/native_software.html#native_binaries:google_test">GoogleTest support</a> sections in  the User Guide for more details.</p>
+</li>
+<li>
+<p>As there is no 'standard' way of creating documentation for C projects, the <code>c</code> plugin does not offer a task to generate documentation. If you do use the popular <a href="http://www.stack.nl/~dimitri/doxygen">Doxygen</a> tool for documenting C code, you may want to have a look at the <a href="https://plugins.gradle.org/plugin/org.ysb33r.doxygen">Doxygen plugin</a> for Gradle</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-05-04 17:07:48 UTC
+</div>
+</div>
+</body>
+</html>
