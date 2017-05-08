@@ -59,7 +59,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>About NN minutes</p>
+<p>About 15 minutes</p>
 </li>
 <li>
 <p>A text editor</p>
@@ -84,13 +84,26 @@
 <h2 id="layout"><a class="anchor" href="#layout"></a>Layout</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The first step is to create a folder for the new project and change folder into it.</p>
+<p>The first step is to create a folder for the new project and add a <a href="https://docs.gradle.org/3.5/userguide/gradle_wrapper.html#sec:wrapper_generation">Gradle Wrapper</a> to the project.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>$ mkdir c-executable
-$ cd c-executable</pre>
+$ cd c-executable
+$ gradle wrapper <i class="conum" data-value="1"></i><b>(1)</b>
+
+:wrapper
+
+BUILD SUCCESSFUL</pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This allows a version of Gradle to be locked to a project and henceforth you can use <code>./gradlew</code> instead of <code>gradle</code>.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Create a minimalist <code>build.gradle</code> file with the following content:</p>
@@ -296,7 +309,7 @@ Hello World</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-04 19:22:51 UTC
+Last updated 2017-05-08 13:49:20 UTC
 </div>
 </div>
 </body>
