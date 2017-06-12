@@ -1,11 +1,7 @@
 language: java
-matrix:
-  include:
-  - os: linux
-    jdk: oraclejdk7
-  - os: osx
-    osx_image: xcode8.3
-script: ./gradlew build publishGhPages --stacktrace
+jdk:
+- oraclejdk8
+script: GRGIT_PASS= ./gradlew build gitPublishPush --stacktrace
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
 - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -16,10 +12,9 @@ cache:
   - $HOME/.gradle/wrapper/
 env:
   global:
-    secure: mh1kM+rcWUlhT9cDeEa5gz79ZwOYVviA/fabEqhzXZ1GqgTnero1dO7oY3ekZjpOY0hqxrpebuPLpN7V5Uwd76rqBgtRaQ0EDP/l1t7ZAybw8GNJ+tgEvzU+24eFBdouJ0CMad79UUGLJxTwxDOE9JISWFnXQ6E6C2yHrCqaJG+lusKKQt+L5FsjB05t9jiel7ZAJuVnC9QlDs8QIsSR7rHpGxz8UQE0cT6Yuf1lLry5gOTDpnC7wkSVKR80a+NyItgIYKbJdvca6fGkWLwbYpoKr7s8cz+ODTi38YXo9AKHuL9APXSL3Ab59AMfnsVBglhgl6x0JJLdf1OrIxLDiPr5p37SpaiHrhPkoeSXOjv3swThV5BCx22QS0gWtDl9ohsykZqSQ0veq0M1opfX5DX4TZtwQMVk+2tHBndJsCCs1mc9Zb0fpeGP5EYLVJ1PCxlhacCyVa5mwmhfrlTCdxsRtuiUS/awOtz+VeqlF8b5XmtUReshhdvd1w9Nl9uOxcO6g6RJPcTaY51M0415vjHRG+EJlP0gM6k3vwOw9XbQRtqK5DYwFIdFirSeZ+e+jYzbJp3bgX0k295jIZ4tbgMs0WL1UE2XI+KAwR47G24fS4m2SXM1rnSzbTDWY6HZnADGoaYcRRztQLxjQhFKo6roCwYrdc+nwedjTAboiLM=
+    secure: RT/7MX62UAK27PblhdaONhX0GiUbd1tOI2qmZdU5d/5j8cb7X1k8BpZn9uuugekpp5rVmAVlmfwwObcF6YZhLSx3zFbgjXNrKgQFCavZOXjwhvZL7U3/dYO6X1SSPi17dZ1F5bAGWMa/LEQQzv73sPSVlfY/izdjQL+LkYQ2p1d4gzHdNZ0y49uVxnsr3lCeKTZh5ZKU7BWtLEwiV5Nw7iNlSFvRtwWFHxEJBknvgLyiWz+ySGqRwii3IQqN6Gx9F+LlX9vQ3rj9MfJVsDiTWjZiPWrrDBWfRkLusVMqm8yU7CVrzgWs/7iwa9DfACp1oQ+rBhbha3033g8uqJLdrcAhQGBl7+iXFtc1j8WsXzcpt4H1ngEEmukmzCwGuqR7cbaZOijBCsls8BERruSpzo6mpeq0J978YrikT7+svf8D+17wh5RWARG+fpkXFkMKqy8qtNypwFaUVXwEqA12UI+ynNlI8OeHinKqh/GLeMmBv7XVdOShnmsWgIWsrc9nHYca1rHT+1pEs7rQaE7ZnhL4HJVyZjNDu+Kp+FmSUKYJrd8c6MLMzikedt/uORKsoerz2LHwdwVbl3unV9EHG+1A+tUMl6dgJDpYvzxpYw6JNVynJsbcUKNM+Bq+4ShJaMce+XqRu3pjgH72WM8qMw3XmbDTnrMOkGrzFSC64r0=
 notifications:
   slack:
-    on_success: always
-    on_failure: always
+    on_success: change
     rooms:
       secure: 1pJzgkUfiSP/KX5TuAsAgKhFtaVcfVWwdK+rbHMpzX0herxB4aAtVh3V1EnkiOgPkCcehviLC5MsEDxgwMsLt7Ko7RQsZLd42w8dxv+cxQad4f3LPlej6G2QJMjO0+JeDDC++lBcYsj932buT7XqZQ37QYGuM2GOp3bOqwhZ0mpHgyQ/pWw+m0upiJL1Z/snjt6tLsQejUKFkl71omDleB/JPmgSDgXWIBBtPkR+J4ScH9cSXWgtuks30kk/BcI6NOGNDkieJb32K8xDxE8VlK7OY2TNGAEzHD4tFBHQMDLeWQvkc7tPWq9D4GZ2YyJpeq+wnKqu2xZOTkqq6hCDAHhaEGj8CPztHCsg1BdSc6Sq7yJxA8JDvWzh8v8nqRkhiIRPwAjX83DEJYvsA32ytQmibfBq2TEQMhiIDPp5H4YixdGqLxPCXFqR5H+JOwARllYCoMTbSxJimnfLdCFyFhXiX3LTne8GPJnoJx7nsizLSdJ4Ww8XdYmMAHP2QDBQFTdsJpHorm1/FCdqBXdcXNiY6vqRnGHzmiun+3cQEmHfwsiZ3pd4DFgaNjnjxc0zoW+0Qci7ybVtxG5xdFOg8jA/NvnDiEzdg20evNJk1WDboEuHg6eFjVJsjYhElQAcmZEgMjn24Ve/jAqxwcrcGIh5F6p3vmQWeBlgAdptbWU=
