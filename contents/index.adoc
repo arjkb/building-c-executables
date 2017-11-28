@@ -71,7 +71,7 @@ Note the use of `Main` in the task names which are a direct deriviative of the c
 
 By convention, C projects in Gradle will follow a more contemporary layout. This can be troublesome for you if you are used to building C code with build tools that do not use a convention-over-configuration approach. Rest assured that Gradle is very configurable in this regard and should you need to migrate a C project to Gradle you can consult the {user-manual}native_software.html#sec:c_sources[C sources] section of the User Guide.
 
-In the `build.gradle` you have previsouly defined the executable component to be called `main`. By convention, this will means that Gradle will look in `src/main/c` for source files and non-exported header files. Create this folder
+In the `build.gradle` you have previously defined the executable component to be called `main`. By convention, this will means that Gradle will look in `src/main/c` for source files and non-exported header files. Create this folder
 
 [listing]
 ----
